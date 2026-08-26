@@ -1,4 +1,5 @@
 import className from 'classnames';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 type IVerticalFeatureRowProps = {
@@ -21,6 +22,12 @@ const VerticalFeatureRow = (props: IVerticalFeatureRowProps) => {
   );
 
   const router = useRouter();
+  let imageDimensions = { width: 375, height: 307 };
+  if (props.image.includes('feature2')) {
+    imageDimensions = { width: 379, height: 326 };
+  } else if (props.image.includes('feature3')) {
+    imageDimensions = { width: 166, height: 131 };
+  }
 
   return (
     <div className={verticalFeatureClass}>
@@ -30,7 +37,14 @@ const VerticalFeatureRow = (props: IVerticalFeatureRowProps) => {
       </div>
 
       <div className="w-full p-6 sm:w-1/2">
-        <img src={`${router.basePath}${props.image}`} alt={props.imageAlt} />
+        <Image
+          src={`${router.basePath}${props.image}`}
+          alt={props.imageAlt}
+          width={imageDimensions.width}
+          height={imageDimensions.height}
+          loading="lazy"
+          sizes="(max-width: 639px) 100vw, 50vw"
+        />
       </div>
     </div>
   );
